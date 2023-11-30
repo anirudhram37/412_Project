@@ -452,15 +452,3 @@ Values (
  SELECT * FROM user_data;
  SELECT * FROM payment;
  */
-
- 9, -1, -3, 4, 5
-
-skipped: 9, 9, 6, 
-nskippe: 9, 8, 8, 
-
- -1, -2, -3, -4, -5
-
-
-
- skipped: 0, -2, -2, -6, -5
- nonskipped: -1, -1, -4, -4, -9
