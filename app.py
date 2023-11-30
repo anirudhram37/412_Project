@@ -9,15 +9,22 @@ def db_connect():
     conn  = psycopg2.connect(database='dbproject', host='localhost', user='postgres', password='password', port='5432')
     return conn
 
-def select_from_db(table_name, where_condition=None, order_by=None, rows="*"):
+def select_from_db(table_name, where_condition=None, order_by=None, rows=None):
     conn = db_connect()
     cursor = conn.cursor()
-    query = [f'SELECT {rows} FROM {table_name} ']
+    query = [f'SELECT {rows if rows else "*"} FROM {table_name} ']
     if where_condition: query.append(f'WHERE {where_condition} ')
     if order_by: query.append(f'ORDER BY {order_by} ')
     query = ''.join(query)
     cursor.execute(query)
     return cursor.fetchall()
+
+def try_catch_param(param, args):
+    try:
+        ret = args[param]
+    except:
+        ret = None
+    return ret
 
 
 
@@ -25,8 +32,13 @@ def select_from_db(table_name, where_condition=None, order_by=None, rows="*"):
 def index():
     return render_template('index.html')
 
-@app.route("/connection")
+@app.route("/order_info")
 def page():
-    return select_from_db("order_info")
+    args = request.args
+    rows = try_catch_param('rows', args)
+    where_cond = try_catch_param('where', args)
+    order_by = try_catch_param('order_by', args)
+    return select_from_db("order_info", rows=rows, where_condition=where_cond, order_by=order_by)
+
 if __name__ == '__main__':
     app.run(debug=True)
