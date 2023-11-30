@@ -26,19 +26,20 @@ def try_catch_param(param, args):
         ret = None
     return ret
 
-
-
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route("/order_info")
-def page():
+@app.route("/select")
+def select():
     args = request.args
     rows = try_catch_param('rows', args)
     where_cond = try_catch_param('where', args)
     order_by = try_catch_param('order_by', args)
-    return select_from_db("order_info", rows=rows, where_condition=where_cond, order_by=order_by)
+    table_name = try_catch_param('table_names', args)
+    if not table_name:
+        return "NEED TABLE NAME"
+    return select_from_db(table_name, rows=rows, where_condition=where_cond, order_by=order_by)
 
 if __name__ == '__main__':
     app.run(debug=True)
