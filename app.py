@@ -6,18 +6,42 @@ app = Flask(__name__)
 
 def db_connect():
     # have to change parameters to the configurations for your database
-    conn  = psycopg2.connect(database='dbproject', host='localhost', user='postgres', password='password', port='5432')
+    conn  = psycopg2.connect(database='ecommerce_db', host='localhost', user='postgres', password='password', port='5432')
     return conn
+
+def get_columns(table_name):
+    conn = db_connect()
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT column_name FROM information_schema.columns WHERE table_name = '{table_name}'")
+    return [row[0] for row in cursor.fetchall()]
 
 def select_from_db(table_name, where_condition=None, order_by=None, rows=None):
     conn = db_connect()
     cursor = conn.cursor()
     query = [f'SELECT {rows if rows else "*"} FROM {table_name} ']
-    if where_condition: query.append(f'WHERE {where_condition} ')
-    if order_by: query.append(f'ORDER BY {order_by} ')
+    if where_condition:
+        query.append(f'WHERE {where_condition} ')
+    if order_by:
+        query.append(f'ORDER BY {order_by} ')
     query = ''.join(query)
     cursor.execute(query)
     return cursor.fetchall()
+
+def insert_into_db(table_name, values):
+    conn = db_connect()
+    cursor = conn.cursor()
+
+    cols = ', '.join(values.keys())
+    params = ', '.join(['%s'] * len(values))
+    query = f'INSERT INTO {table_name} ({cols}) VALUES ({params})'
+
+    try:
+        cursor.execute(query, list(values.values()))
+        conn.commit()
+        return "Row added successfully"
+    except Exception as e:
+        conn.rollback()
+        return f"Error adding row: {str(e)}"
 
 def try_catch_param(param, args):
     try:
@@ -30,16 +54,28 @@ def try_catch_param(param, args):
 def index():
     return render_template('index.html')
 
-@app.route("/select")
-def select():
+@app.route('/select/<table_name>')
+def select(table_name):
     args = request.args
     rows = try_catch_param('rows', args)
     where_cond = try_catch_param('where', args)
     order_by = try_catch_param('order_by', args)
-    table_name = try_catch_param('table_names', args)
-    if not table_name:
-        return "NEED TABLE NAME"
-    return select_from_db(table_name, rows=rows, where_condition=where_cond, order_by=order_by)
+
+    return str(select_from_db(table_name, rows=rows, where_condition=where_cond, order_by=order_by))
+
+@app.route('/insert/<table_name>', methods=['GET', 'POST'])
+def insert(table_name):
+    if request.method == 'POST':
+        args = request.form
+        values = {key: try_catch_param(key, args) for key in request.form.keys()}
+
+        if not all(values.values()):
+            return "All fields are required"
+
+        return insert_into_db(table_name, values)
+
+    columns = get_columns(table_name)
+    return render_template('insert.html', table_name=table_name, columns=columns)
 
 if __name__ == '__main__':
     app.run(debug=True)
