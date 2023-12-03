@@ -70,15 +70,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     productCard.appendChild(productImage);
 
     const productName = document.createElement("h2");
-    productName.textContent = product.name;
+    productName.textContent = product[1];
     productCard.appendChild(productName);
 
     const productPrice = document.createElement("p");
-    productPrice.textContent = `Price: $${product.price}`;
+    productPrice.textContent = `Price: $${product[2]}`;
     productCard.appendChild(productPrice);
 
     const productDescription = document.createElement("p");
-    productDescription.textContent = product.description;
+    productDescription.textContent = product[6];
     productCard.appendChild(productDescription);
 
     const addToCartButton = document.createElement("button");
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     productCard.appendChild(addToCartButton);
 
     const productLink = document.createElement("a");
-    productLink.href = product.productLink;
+    productLink.href = product[5];
     productLink.textContent = "View on Amazon";
     productCard.appendChild(productLink);
 
@@ -102,6 +102,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Function to handle the "Add to Cart" button click
   function addToCart(product) {
     // Implement your logic to add the product to the cart
-    console.log(`Added ${product.name} to the cart`);
+    console.log(`Added ${product[1]} to the cart`);
   }
 });
