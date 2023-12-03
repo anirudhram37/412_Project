@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def db_connect():
     # have to change parameters to the configurations for your database
-    conn  = psycopg2.connect(database='ecommerce_db', host='localhost', user='postgres', password='password', port='5432')
+    conn  = psycopg2.connect(database='dbproject', host='localhost', user='postgres', password='password', port='5432')
     return conn
 
 def get_columns(table_name):
