@@ -1,4 +1,5 @@
 import psycopg2
+import json
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
@@ -25,7 +26,7 @@ def select_from_db(table_name, where_condition=None, order_by=None, rows=None):
         query.append(f'ORDER BY {order_by} ')
     query = ''.join(query)
     cursor.execute(query)
-    return cursor.fetchall()
+    return json.dumps(cursor.fetchall())
 
 def insert_into_db(table_name, values):
     conn = db_connect()
