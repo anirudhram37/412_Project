@@ -99,6 +99,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     productList.appendChild(productCard);
   });
 
+  const data1 = await fetch('http://127.0.0.1:5000/select/product,price?where=product.id = price.product_id AND price.discount_percent != 0&rows=product.id, discount_percent');
+  const products1 = await data.json();
+
+  //TODO: Update the prices
+  // [["B002SZEOLG", 44], ["B003B00484", 20], ["B003L62T7W", 26], ["B004IO5BMQ", 30], ["B005FYNT3G", 56], ["B005LJQMCK", 31], ["B005LJQMZC", 76], ["B006LW0WDQ", 50], ["B002PD61Y4", 58]]
+  // price * (1 - discount/100)
+
   // Function to handle the "Add to Cart" button click
   function addToCart(product) {
     // Implement your logic to add the product to the cart
