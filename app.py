@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 def db_connect():
     # have to change parameters to the configurations for your database
-    conn  = psycopg2.connect(database='dbproject', host='localhost', user='postgres', password='password', port='5432')
+    conn  = psycopg2.connect(database='ecommerce_db', host='localhost', user='postgres', password='password', port='5432')
     return conn
 
 def get_columns(table_name):
@@ -59,15 +59,17 @@ def index():
 def reviews():
     return render_template('review.html')
 
+
 @app.route('/orders')
 def orders():
-    return render_template('review.html')
-@app.route('/suppliers')
-def suppliers():
-    return render_template('review.html')
+    return render_template('checkout.html')
+@app.route('/supplier')
+def supplier():
+    return render_template('supplier.html')
 @app.route('/users')
 def users():
     return render_template('review.html')
+
 
 @app.route('/select/<table_name>')
 def select(table_name):

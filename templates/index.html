@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static',filename='412home.css') }}">
     <script defer src="412home.js"></script>
-    <title>Your Amazon Replica</title>
+    <title>Your Shopify Replica</title>
 </head>
 <body>
     <header>
         <h1>Products</h1>
         <button id="reviews" onclick="location.href = '/reviews';" >Reviews</button>
-        <button id="suppliers" onclick="location.href = '/suppliers';">Supplier</button>
-        <button id="users" onclick="location.href = '/users';">Users</button>
+        <button id="suppliers" onclick="location.href = '/supplier';">Supplier</button>
+        <button id="users" onclick="location.href = '/insert/user_data';">Users</button>
+        <button id="payment" onclick="location.href = '/insert/payment';">Payment</button>
         <button id="orders" onclick="location.href = '/orders';">Orders</button>
     </header>
     <main>
