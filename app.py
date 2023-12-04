@@ -62,7 +62,7 @@ def reviews():
 
 @app.route('/orders')
 def orders():
-    return render_template('checkout.html')
+    return render_template('orders.html')
 @app.route('/supplier')
 def supplier():
     return render_template('supplier.html')
