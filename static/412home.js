@@ -1,12 +1,24 @@
 document.addEventListener("DOMContentLoaded", async function () {
-  
+
   const data = await fetch('http://127.0.0.1:5000/select/product');
   const products = await data.json();
+
+
+  const data1 = await fetch('http://127.0.0.1:5000/select/product,price?where=product.id = price.product_id AND price.discount_percent != 0&rows=product.id, discount_percent');
+  const products1 = await data1.json();
+
+  const prices = {};
+  products1.forEach(([id, discount]) => {
+    prices[id] = discount
+  });
+  console.log(prices);
 
   const productList = document.getElementById("productList");
 
   products.forEach(product => {
+    const id = product[0];
     const productCard = document.createElement("div");
+    const buttonContainer = document.createElement("div");
     productCard.classList.add("product");
 
     const productImage = document.createElement("img");
@@ -19,7 +31,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     productCard.appendChild(productName);
 
     const productPrice = document.createElement("p");
-    productPrice.textContent = `Price: $${product[2]}`;
+
+    productPrice.textContent = id in prices ? `Price: $${Math.round(product[2] * (1 - prices[id] / 100))}` : `Price: $${product[2]}`;
+    if (id in prices) {
+      productPrice.style.color = 'red';
+      productPrice.textContent = productPrice.textContent + " DISCOUNTED PRICE!"
+    }
     productCard.appendChild(productPrice);
 
     const productDescription = document.createElement("p");
@@ -49,8 +66,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     reviewButton.style.padding = "10px 20px"; // Adjust the padding as needed
     // Add event listener to handle the "Write a Review" button click
     reviewButton.addEventListener("click", () => writeReview(product));
-    buttonContainer.appendChild(reviewButton);    
+    buttonContainer.appendChild(reviewButton);
 
+    productCard.appendChild(buttonContainer);
     const productLink = document.createElement("a");
     productLink.href = product[5];
     productLink.textContent = "View on Amazon";
@@ -59,12 +77,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     productList.appendChild(productCard);
   });
 
-  const data1 = await fetch('http://127.0.0.1:5000/select/product,price?where=product.id = price.product_id AND price.discount_percent != 0&rows=product.id, discount_percent');
-  const products1 = await data.json();
-
-  //TODO: Update the prices
-  // [["B002SZEOLG", 44], ["B003B00484", 20], ["B003L62T7W", 26], ["B004IO5BMQ", 30], ["B005FYNT3G", 56], ["B005LJQMCK", 31], ["B005LJQMZC", 76], ["B006LW0WDQ", 50], ["B002PD61Y4", 58]]
-  // price * (1 - discount/100)
 
   // Function to handle the "Add to Cart" button click
   function addToCart(product) {
@@ -74,5 +86,5 @@ document.addEventListener("DOMContentLoaded", async function () {
   function writeReview(product) {
     // Implement your logic to allow the user to write a review for the product
     console.log(`Writing a review for ${product.name}`);
-}
+  }
 });
