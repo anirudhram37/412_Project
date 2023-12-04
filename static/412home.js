@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Function to handle the "Add to Cart" button click
   function addToCart(product) {
     // Implement your logic to add the product to the cart
+    window.location.href = "/insert/order_info"
     console.log(`Added ${product[1]} to the cart`);
   }
   function writeReview(product) {
