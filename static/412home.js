@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const data = await fetch('http://127.0.0.1:5000/select/product');
   const products = await data.json();
 
-
   const data1 = await fetch('http://127.0.0.1:5000/select/product,price?where=product.id = price.product_id AND price.discount_percent != 0&rows=product.id, discount_percent');
   const products1 = await data1.json();
 
@@ -42,6 +41,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     const productDescription = document.createElement("p");
     productDescription.textContent = product[6];
     productCard.appendChild(productDescription);
+
+    const productID = document.createElement("p");
+    productID.textContent = `PRODUCT ID: ${product[0]}`;
+    productCard.appendChild(productID);
 
     const addToCartButton = document.createElement("button");
     addToCartButton.textContent = "Add to orders";
