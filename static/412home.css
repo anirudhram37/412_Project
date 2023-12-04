@@ -15,6 +15,25 @@ main {
     padding: 1rem;
 }
 
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #00aeff;
+    color: #00aeff;
+    background-color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+    background-color: #00aeff;
+    color: white;
+}
+
 .product {
     border: 1px solid #dddddd;
     padding: 1rem;

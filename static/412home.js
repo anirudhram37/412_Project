@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     productCard.appendChild(productDescription);
 
     const addToCartButton = document.createElement("button");
-    addToCartButton.textContent = "Add to Cart";
+    addToCartButton.textContent = "Add to orders";
     addToCartButton.classList.add("add-to-cart-button");
     // Increase the size of the button
     addToCartButton.style.fontSize = "16px"; // Adjust the font size as needed
@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   }
   function writeReview(product) {
     // Implement your logic to allow the user to write a review for the product
+    window.location.href = "/insert/reviews"
     console.log(`Writing a review for ${product.name}`);
   }
 });

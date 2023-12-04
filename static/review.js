@@ -1,49 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async () => {
     // Sample product and reviews data
-    const products = [
-        {
-            productId: 'B002PD61Y4',
-            productName: 'D-Link WiFi Adapter'
-        },
-        {
-            productId: 'B002SZEOLG',
-            productName: 'Logitech B100 Wired USB Mouse'
-        },
-        {
-            productId: 'B003B00484',
-            productName: 'Duracell AAA Batteries'
-        },
-        {
-            productId: 'B003L62T7W',
-            productName: 'Handy Mouse'
-        },
-        {
-            productId: 'B004IO5BMQ',
-            productName: 'Silent Mouse'
-        },
-        {
-            productId: 'B005FYNT3G',
-            productName: 'USB Flash Drive'
-        },
-        {
-            productId: 'B005LJQMCK',
-            productName: 'Digital Optical Audio Toslink Cable (1.8 Meter)'
-        },
-        {
-            productId: 'B005LJQMZC',
-            productName: 'Digital Optical Audio Toslink Cable (6 Feet)'
-        },
-        {
-            productId: 'B006LW0WDQ',
-            productName: 'Amazon Basics 16-Gauge Speaker Wire - 50 Feet'
-        },
-        {
-            productId: 'B0073QGKAS',
-            productName: 'Bajaj ATX 4 750-Watt Pop-up Toaster (White)'
-        }
-        // Add more products as needed
-    ];
-
     const reviewsData = [
         {
             reviewId: 'R2EJIN3N3L3XKIR2JMJ8QNG66LV4R3B46JNPC2T4E7R3HHJCTEJ7J9CSR2LOAPI3SK4RCXR1MLGZDQDKIVIFR10KVN4LSVD459R3BO9D050WHWVX',
@@ -108,33 +64,57 @@ document.addEventListener("DOMContentLoaded", function () {
         // Add more reviews as needed
     ];
 
+    const data1 = await fetch('http://127.0.0.1:5000/select/reviews,product?where=product.id = reviews.product_id');
+    const products = await data1.json();
+
     const reviewsContainer = document.getElementById("reviews-container");
 
     // Function to display reviews
     function displayReviews() {
         products.forEach(product => {
             // Display product name
+            const name = product[6];
+            const rating = product[13];
+            const reviewTitle = product[1].split('.');
+            const reviewContent = product[2].split('.');
+            const reviews = reviewTitle.map((e, i) => [e, reviewContent[i]]);
+            const reviewsFinal = reviews.map(item => "<b>" + item[0] + "</b> : " + item[1]).join('<br/>');
+            console.log(name, reviewsFinal)
             const productNameElement = document.createElement("h2");
-            productNameElement.textContent = product.productName;
+            productNameElement.textContent = name;
             reviewsContainer.appendChild(productNameElement);
 
+            const reviewElement = document.createElement("div");
+            reviewElement.classList.add("review");
+
+            const ratingElement = document.createElement("p");
+            ratingElement.classList.add("rating");
+            ratingElement.textContent = `Rating: ${rating.toFixed(2)}`;
+            reviewElement.appendChild(ratingElement);
+
+            const reviewTextElement = document.createElement("p");
+            reviewTextElement.innerHTML = reviewsFinal;
+            reviewElement.appendChild(reviewTextElement);
+
+            reviewsContainer.appendChild(reviewElement);
+
             // Display reviews for the product
-            const productReviews = reviewsData.filter(review => review.productId === product.productId);
-            productReviews.forEach(review => {
-                const reviewElement = document.createElement("div");
-                reviewElement.classList.add("review");
+            // const productReviews = reviewsData.filter(review => review.productId === product.productId);
+            // productReviews.forEach(review => {
+            //     const reviewElement = document.createElement("div");
+            //     reviewElement.classList.add("review");
 
-                const ratingElement = document.createElement("p");
-                ratingElement.classList.add("rating");
-                ratingElement.textContent = `Rating: ${review.rating}`;
-                reviewElement.appendChild(ratingElement);
+            //     const ratingElement = document.createElement("p");
+            //     ratingElement.classList.add("rating");
+            //     ratingElement.textContent = `Rating: ${review.rating}`;
+            //     reviewElement.appendChild(ratingElement);
 
-                const reviewTextElement = document.createElement("p");
-                reviewTextElement.textContent = review.reviewText;
-                reviewElement.appendChild(reviewTextElement);
+            //     const reviewTextElement = document.createElement("p");
+            //     reviewTextElement.textContent = review.reviewText;
+            //     reviewElement.appendChild(reviewTextElement);
 
-                reviewsContainer.appendChild(reviewElement);
-            });
+            //     reviewsContainer.appendChild(reviewElement);
+            // });
         });
     }
 

@@ -5,12 +5,13 @@ body {
 }
 
 .review {
-    border: 1px solid #ccc;
+    border: 1px solid #000000;
+    border-radius: 10px;
     margin-bottom: 20px;
     padding: 10px;
 }
 
 .rating {
-    color: #ffcc00;
+    color: rgb(0, 160, 43);
     font-size: 18px;
 }

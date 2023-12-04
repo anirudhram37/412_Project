@@ -55,6 +55,20 @@ def try_catch_param(param, args):
 def index():
     return render_template('index.html')
 
+@app.route('/reviews')
+def reviews():
+    return render_template('review.html')
+
+@app.route('/orders')
+def orders():
+    return render_template('review.html')
+@app.route('/suppliers')
+def suppliers():
+    return render_template('review.html')
+@app.route('/users')
+def users():
+    return render_template('review.html')
+
 @app.route('/select/<table_name>')
 def select(table_name):
     args = request.args
