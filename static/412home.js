@@ -35,6 +35,21 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Add event listener to handle the "Add to Cart" button click
     addToCartButton.addEventListener("click", () => addToCart(product));
     productCard.appendChild(addToCartButton);
+    // Add a gap between the buttons
+    const buttonGap = document.createElement("div");
+    buttonGap.style.width = "10px"; // Adjust the gap width as needed
+    buttonContainer.appendChild(buttonGap);
+
+    // Add a Review button
+    const reviewButton = document.createElement("button");
+    reviewButton.textContent = "Write a Review";
+    reviewButton.classList.add("review-button");
+    // Increase the size of the button
+    reviewButton.style.fontSize = "16px"; // Adjust the font size as needed
+    reviewButton.style.padding = "10px 20px"; // Adjust the padding as needed
+    // Add event listener to handle the "Write a Review" button click
+    reviewButton.addEventListener("click", () => writeReview(product));
+    buttonContainer.appendChild(reviewButton);    
 
     const productLink = document.createElement("a");
     productLink.href = product[5];
@@ -56,4 +71,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     // Implement your logic to add the product to the cart
     console.log(`Added ${product[1]} to the cart`);
   }
+  function writeReview(product) {
+    // Implement your logic to allow the user to write a review for the product
+    console.log(`Writing a review for ${product.name}`);
+}
 });
