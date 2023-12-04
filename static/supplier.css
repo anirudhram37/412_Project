@@ -1,36 +1,17 @@
-body, ul {
-    margin: 0;
-    padding: 0;
-}
-
 body {
     background-color: #f0f0f0;
     font-family: Arial, sans-serif;
 }
 
-#supplier-container {
-    background-color: #ff9900;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin: 20px auto;
-    padding: 20px;
-    width: 80%;
-}
 
-#supplier-container h1 {
-    color: #fff;
-}
-
-#supplier-container script {
-    display: block;
-    margin-top: 20px;
-}
-
-a {
-    color: #ff9900;
+h2 {
+    color: rgb(191, 76, 47);
     text-decoration: none;
 }
 
-a:hover {
-    color: #e68a00;
+div {
+    border: solid;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
 }
