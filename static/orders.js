@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             orderContainer.appendChild(orderIdElement);
 
             const productImage = document.createElement("img");
-            productImage.src = order[11];
+            productImage.src = order[10];
             orderContainer.appendChild(productImage);
 
             const productInfo = document.createElement("p");
