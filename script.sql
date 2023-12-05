@@ -53,7 +53,6 @@ CREATE TABLE order_info(
     UserData_address VARCHAR(2083),
     Payment_card INTEGER,
     Payment_id VARCHAR(2083),
-    UserData_name VARCHAR(2083),
     date DATE,
     PRIMARY KEY (id),
     FOREIGN KEY (Product_id) REFERENCES Product ON DELETE CASCADE,
